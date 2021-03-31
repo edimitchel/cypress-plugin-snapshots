@@ -126,7 +126,6 @@ function closeSnapshotModal() {
     e.preventDefault();
 
     const data = JSON.parse(Base64.decode(e.currentTarget.getAttribute('href').replace('#cypress-plugin-snapshot-', '')));
-    console.log('data:', data);
     if (data) {
       formatResult(data).then((diffHtml) => {
         const updateButton = window.saveSnapshot && !data.passed && !data.updated ?

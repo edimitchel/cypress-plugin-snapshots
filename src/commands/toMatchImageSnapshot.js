@@ -53,18 +53,7 @@ async function toMatchImageSnapshot(subject, commandOptions) {
         MATCH_IMAGE,
         taskData,
         NO_LOG
-      ).then((result) => {
-        if (!result.passed && commandOptions.retryCount > 0) {
-          return cy.wait(commandOptions.retryDelay).then(() => {
-            const newCommandOptions = {
-              ...commandOptions,
-              retryCount: commandOptions.retryCount - 1,
-            };
-            return toMatchImageSnapshot(subject, newCommandOptions, true);
-          });
-        }
-        return logMessage(result);
-      })
+      ).then(logMessage)
     );
 }
 

@@ -49,7 +49,7 @@ const DEFAULT_CONFIG = Object.freeze({
   token: createToken(),
   updateSnapshots: false,
   backgroundBlend: 'difference',
-  name: ''
+  name: '',
 });
 
 const CONFIG_KEY = 'cypress-plugin-snapshots';

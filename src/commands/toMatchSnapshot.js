@@ -18,9 +18,7 @@ function toMatchSnapshot(subject, options) {
         MATCH_TEXT,
         taskData,
         NO_LOG
-      ).then((result) => {
-        return logMessage(result);
-      })
+      ).then(logMessage)
     );
 }
 
