@@ -6,19 +6,29 @@ const logMessage = require('../utils/commands/logMessage');
 const { NO_LOG } = require('../constants');
 const { COMMAND_MATCH_SNAPSHOT: commandName } = require('./commandNames');
 
+let retryCount;
+
 function toMatchSnapshot(subject, options) {
-  const isRetry = (cy.state('runnable')._retries || 0) > 0;
-  
+  if (retryCount === undefined) {
+    retryCount = cy.state('runnable')._retries;
+  }
   return getTaskData({
       commandName,
       options,
       subject,
-      isRetry
+      isRetry: retryCount < cy.state('runnable')._retries
     }).then(taskData => cy.task(
         MATCH_TEXT,
         taskData,
         NO_LOG
-      ).then(logMessage)
+      ).then((result) => {
+        if (!result.passed && retryCount > 0) {
+          retryCount--;
+          return toMatchSnapshot(subject, options);
+        }
+        retryCount = undefined;
+        return logMessage(result);
+      })
     );
 }
 

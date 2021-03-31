@@ -19,12 +19,16 @@ function afterScreenshot(taskData) {
   };
 }
 
+let retryCount;
+
 async function toMatchImageSnapshot(subject, commandOptions) {
   const options = getImageConfig(commandOptions);
   const customName = getCustomName(commandOptions);
   const customSeparator = getCustomSeparator(commandOptions);
 
-  const isRetry = (cy.state('runnable')._retries || 0) > 0;
+  if (retryCount === undefined) {
+    retryCount = cy.state('runnable')._retries;
+  }
   
   const taskData = await getTaskData({
     commandName,
@@ -53,7 +57,14 @@ async function toMatchImageSnapshot(subject, commandOptions) {
         MATCH_IMAGE,
         taskData,
         NO_LOG
-      ).then(logMessage)
+      ).then((result) => {
+        if (!result.passed && retryCount > 0) {
+          retryCount--;
+          return toMatchImageSnapshot(subject, options);
+        }
+        retryCount = undefined;
+        return logMessage(result);
+      })
     );
 }
 

@@ -15,10 +15,12 @@ function getSnapshotTitle(test, customName, customSeparator, isImage = false, is
   const separator = customSeparator || ' #';
   const snapshots = isImage ? SNAPSHOTS_IMAGE : SNAPSHOTS_TEXT;
 
-  if (snapshots[name] !== undefined && !isRetry) {
-    snapshots[name] += 1;
-  } else {
-    snapshots[name] = 0;
+  if(!isRetry) {
+    if (snapshots[name] !== undefined) {
+      snapshots[name] += 1;
+    } else {
+      snapshots[name] = 0;
+    }
   }
 
   const snapshotTitle = `${name}${separator}${snapshots[name]}`;
