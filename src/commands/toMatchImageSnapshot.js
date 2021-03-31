@@ -19,11 +19,13 @@ function afterScreenshot(taskData) {
   };
 }
 
-async function toMatchImageSnapshot(subject, commandOptions, isRetry = false) {
+async function toMatchImageSnapshot(subject, commandOptions) {
   const options = getImageConfig(commandOptions);
   const customName = getCustomName(commandOptions);
   const customSeparator = getCustomSeparator(commandOptions);
 
+  const isRetry = (cy.state('runnable')._retries || 0) > 0;
+  
   const taskData = await getTaskData({
     commandName,
     options,

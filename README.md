@@ -1,4 +1,5 @@
 # cypress-plugin-snapshots
+
 > Plugin for snapshot tests in [Cypress.io](https://www.cypress.io/).
 
 [![NPM][npm-icon]][npm-url]
@@ -8,9 +9,11 @@
 ![cypress-plugin-snapshots](docs/images/cypress-plugin-snapshots.png)
 
 ## Installation
+
 `npm i cypress-plugin-snapshots -S`
 
 ## Usage for text snapshots
+
 ```javascript
 describe('data test', () => {
   it('toMatchSnapshot - JSON', () => {
@@ -37,6 +40,7 @@ describe('data test', () => {
 ```
 
 You can pass the following options to `toMatchSnapshot` to override default behavior.
+
 ```javascript
 {
   "ignoreExtraFields": false,         // Ignore fields that are not in snapshot
@@ -53,6 +57,7 @@ Use `replace` with caution. Tests should be deterministic. It's often a better s
 test result instead of your snapshot (by mocking data for example).
 
 ## Usage for image snapshots
+
 ```javascript
 it('toMatchImageSnapshot - element', () => {
   cy.visit('/static/stub.html')
@@ -72,6 +77,7 @@ it('toMatchImageSnapshot - whole page', () => {
 ```
 
 You can pass the following options to `toMatchImageSnapshot` to override default behavior.
+
 ```javascript
 {
   "imageConfig": {
@@ -87,6 +93,7 @@ You can pass the following options to `toMatchImageSnapshot` to override default
 You can also use any option from the `cypress.screenshot` [arguments list](https://docs.cypress.io/api/commands/screenshot.html#Arguments).
 
 For example:
+
 ```javascript
 cy.get('.element')
   .toMatchImageSnapshot({
@@ -95,7 +102,9 @@ cy.get('.element')
 ```
 
 ## Configure Cypress.io
+
 Add this to your `cypress.json` configuration file:
+
 ```json
 "ignoreTestFiles": [
   "**/__snapshots__/*",
@@ -104,6 +113,7 @@ Add this to your `cypress.json` configuration file:
 ```
 
 ### Plugin
+
 Find your `cypress/plugins/index.js` file and change it to look like this:
 
 ```javascript
@@ -116,6 +126,7 @@ module.exports = (on, config) => {
 ```
 
 ### Command
+
 Find your `cypress/support/index.js` file and add the following line:
 
 ```javascript
@@ -123,6 +134,7 @@ import 'cypress-plugin-snapshots/commands';
 ```
 
 ### Make changes to default configuration
+
 You can customize the configuration in the `cypress.json` file in the root of your Cypress project.
 
 Add the configuration below to your `cypress.json` file to make changes to the default values.
@@ -158,16 +170,16 @@ Add the configuration below to your `cypress.json` file to make changes to the d
     "serverPort": 2121,              // Port number for  "update snapshot server"
     "updateSnapshots": false,        // Automatically update snapshots, useful if you have lots of changes
     "backgroundBlend": "difference"  // background-blend-mode for diff image, useful to switch to "overlay"
-    "retryCount": 0                  // Amount of retries if snapshot comparison fails
-    "retryDelay": 200                // Delay time between snapshot retries
   }
 }
 ```
 
-## Caveats :warning:
+## Caveats :warning
+
 There is currently an issue when running "All Tests" in Cypress with this plugin. You can follow the progress on the issue [here](https://github.com/meinaart/cypress-plugin-snapshots/issues/10) and [here](https://github.com/cypress-io/cypress/issues/3090). When running "All Tests" any tests that utilize `cypress-plugin-snapshots` will throw an error.
 
 ## Roadmap
+
 Below is a list of functionality that is under consideration for implementing in a next version.
 
 - Fix handling of "update snapshot" button that contains a replacable field
@@ -177,9 +189,11 @@ Below is a list of functionality that is under consideration for implementing in
 - Improve TypeScript bindings
 
 ## Contributing
+
 In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## License
+
 This plugin is released under the MIT license.
 
 [npm-icon]: https://nodei.co/npm/cypress-plugin-snapshots.svg?downloads=true
