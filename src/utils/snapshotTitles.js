@@ -1,6 +1,6 @@
 const getTestTitle = require('./getTestTitle');
 
-const SNAPSHOTS_TEXT = {}
+const SNAPSHOTS_TEXT = {};
 const SNAPSHOTS_IMAGE = {};
 
 const SNAPSHOT_TITLES_TEXT = [];
@@ -15,12 +15,10 @@ function getSnapshotTitle(test, customName, customSeparator, isImage = false, is
   const separator = customSeparator || ' #';
   const snapshots = isImage ? SNAPSHOTS_IMAGE : SNAPSHOTS_TEXT;
 
-  if (!isRetry) {
-    if (snapshots[name] !== undefined) {
-      snapshots[name] += 1;
-    } else {
-      snapshots[name] = 0;
-    }
+  if (snapshots[name] !== undefined && !isRetry) {
+    snapshots[name] += 1;
+  } else {
+    snapshots[name] = 0;
   }
 
   const snapshotTitle = `${name}${separator}${snapshots[name]}`;
@@ -31,4 +29,4 @@ function getSnapshotTitle(test, customName, customSeparator, isImage = false, is
 module.exports = {
   getSnapshotTitle,
   snapshotTitleIsUsed
-}
+};
